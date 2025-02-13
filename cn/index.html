@@ -247,9 +247,9 @@
           
           
           <li>
-            <a href="/tags/">
+            <a href="/categories/">
               
-              标签
+              分类
               
               
             </a>
@@ -269,9 +269,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/about/">
               
-              分类
+              关于
               
               
             </a>
@@ -280,9 +280,9 @@
           
           
           <li>
-            <a href="/about/">
+            <a href="/tags/">
               
-              关于
+              标签
               
               
             </a>
@@ -407,7 +407,7 @@
           <div class="site-heading">
             <h1>张伟真的博客</h1>
             <!--<hr class="small">-->
-            <span class="subheading">用心享受生活</span>
+            <span class="subheading">用心享受生活, 博客逐步迁移中···</span>
           </div>
           
         </div>
@@ -474,27 +474,307 @@
   <!-- top end -->
   
 
-  <a href="/cn/一次K8S健康检查失败/">
+  <a href="/cn/工作流系列--行为Behavior分析/">
     <h2 class="post-title">
-      记一次K8S健康检查失败
+      工作流系列--行为Behavior分析
     </h2>
     <h3 class="post-subtitle">
       
     </h3>
     <div class="post-content-preview">
-      一次K8S健康检查失败
-背景
-1流水线部署成功，POD一直无法Running，循环重启。使用kubectl descibe pod 查看pod事件为健康检查失败
-临时解决方案
-1确认服务无问题，临时取消健康检查
-分析过程
-12345678910111213141516171819202122232425查看健康检查配置为:           livenessProbe:          ......
+      工作流系列–行为Behavior分析
+在agenda提供的流转类里面看到类多个behavior 今天简单说下,扒了下继承关系如下
+
+想要理解 Behavior 是什么东西,必须要和流程图联系起来，流程图上的一些元素比如:网关、用户任务、子流程、事件等等都有对应的行为，每种行为的处理方式都不同,例如互斥网关,究竟通过网关后怎么走,都有各自的判断行为,离开行为
+例如完成任务中的TriggerEx......
     </div>
   </a>
   
   <p class="post-meta" style="margin: 10px 0;">
     Posted by 张伟真 on
-    2023-08-25
+    2024-11-05
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#工作流" title="工作流">工作流</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/工作流系列--agenda引擎计划分析/">
+    <h2 class="post-title">
+      工作流系列--agenda引擎计划分析
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      工作流系列–agenda引擎计划分析
+先看下源码注释
+
+
+可以理解成agenda是一个线程池,命令执行前会赛一系列的任务Operation进去,然后执行. 当池中任务没有了则结束.
+每个Operation任务都是一个 Runnable 类型的对象，值得深究为什么不是其他的类型, 可能为了后续线程做并发处理设计的
+上一篇章讲了命令执行类CommandInvoker主要做了3件事情
+1、要执行的......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-11-05
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#工作流" title="工作流">工作流</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/工作流系列--完成任务命令分析/">
+    <h2 class="post-title">
+      工作流系列--完成任务命令分析
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      工作流系列–完成任务命令分析
+上一篇讲到activiti使用命令模式，那究竟activiti是怎么通过命令去完成任务的,做了什么,我们一起看看
+既然是跟任务相关,前面initServices初始化的时候初始了6个service,跟任务相关的,我们可以看看TaskService,定义了任务相关操作的入口,看实现最终commandExecutor去执行对应的CompleteTaskCmd命令
+
+......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-11-04
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#工作流" title="工作流">工作流</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/工作流系列--CommandContextInterceptor分析/">
+    <h2 class="post-title">
+      工作流系列--CommandContextInterceptor分析
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      #工作流系列–CommandContextInterceptor分析
+上一篇分析 ProcessEngineAutoConfiguration时,在流程初始化的时候有加载的拦截器链中,加载了拦截器CommandContextInterceptor
+今天我们就来讲讲CommandContextInterceptor
+12345678910111213141516171819public Col......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-11-03
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#工作流" title="工作流">工作流</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/工作流系列--ProcessEngineAutoConfiguration分析/">
+    <h2 class="post-title">
+      工作流系列--ProcessEngineAutoConfiguration分析
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      工作流系列 – ProcessEngineAutoConfiguration分析
+上一篇章我们讲到,找到了入口配置类,那今天我们就来讲讲这个配置类究竟做了啥,有什么魔法
+自动装配又装了哪些东西
+类的继承关系如下图
+
+从ProcessEngineAutoConfiguration源码第一部分,装配了一个配置Bean,这个配置bean是整个流程的基础,规定了流程用什么序列化json,数据源,ss......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-11-02
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#工作流" title="工作流">工作流</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/工作流系列-学习思路/">
+    <h2 class="post-title">
+      工作流系列-学习思路
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      工作流系列 – activity7学习思路
+在工作的这么几年里,经常看到或者身边有同事在接触一个新的技术和引入一个新的框架或者引擎时,不知道这么去学习和深入
+导致在遇到问题的时候无从下手根本不知道问题出现在哪里.
+借助工作流引擎,记录下学习方法,也给大家一些学习的思路
+学习如何入手
+不管是新的技术还是新的框,以主流的框架springboot为例,引入工作流,引用例jar包,配置下就能用. 想......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-11-01
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#工作流" title="工作流">工作流</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/工作流系列-相关表及操作说明/">
+    <h2 class="post-title">
+      工作流系列 -- activity7 相关表及操作说明
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      工作流系列 – activity7 相关表及操作说明
+Activiti Mysql数据库支持：
+Activiti的后台是有数据库的支持,7的版本总共25张表，所有的表都以ACT_开头。 第二部分是表示表的用途的两个字母标识。 用途也和服务的API对应。
+ACT_RE_*: ‘RE’表示repository。 这个前缀的表包含了流程定义和流程静态资源 （图片，规则，等等）。
+ACT_RU_*:......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-10-30
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#工作流" title="工作流">工作流</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/线程池使用不规范导致的生产问题/">
+    <h2 class="post-title">
+      线程池使用不规范导致的生产问题
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      线程池使用不规范导致的生产问题
+一 现象
+线上环境卡顿,k8s探针接口无响应,导致服务假死
+二 紧急处理方案
+在nacos上把有问题的节点紧急下线,切走流量,保留k8s有问题节点,通过jstack pid 导出jvm线程池现状
+三 问题分析
+
+
+系统实现线程池有400个core线程数,任务队列 new ArrayBlockingQueue(2000);
+处于waiting状态的线程数刚好40......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-10-30
   </p>
   <div class="tags">
     
@@ -515,31 +795,73 @@
   <!-- top end -->
   
 
-  <a href="/cn/Hexo-Theme-LiveMyLife/">
+  <a href="/cn/Reactor 模式的理解/">
     <h2 class="post-title">
-      Hexo-Theme-LiveMyLife
+      Reactor 模式的理解
     </h2>
     <h3 class="post-subtitle">
-      A succinct hexo theme...
+      
     </h3>
     <div class="post-content-preview">
-      
-移植 Hux Blog 的主题，感谢 Huxpro 设计了如此完美的主题。
-由 Vincent 创建的 LiveMyLife 的主题修改来源 YenYuHsuan，参考主题 dusign、Utone，感谢 dusign、Utone。
+      理解 Reactor 模式的 3 个重要概念：Publisher、Subscriber和Subscription
+在Reactor中，有三个重要的概念：Publisher、Subscriber和Subscription。
 
-仓库
-Github 仓库地址：https://github.com/V-Vincen/hexo-theme-livemylife
-Gitee 仓库地址：ht......
+
+Publisher：Publisher是一个接口，在Reactor中用于表示数据源。它可以产生数据流，将数据推送给订阅者。Publisher接口定义了subscribe......
     </div>
   </a>
   
   <p class="post-meta" style="margin: 10px 0;">
     Posted by 张伟真 on
-    2020-04-17
+    2024-08-08
   </p>
   <div class="tags">
     
-    <a href="/tags/#Hexo-Theme-LiveMyLife" title="Hexo-Theme-LiveMyLife">Hexo-Theme-LiveMyLife</a>
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/性能测试常见故障和解决思路/">
+    <h2 class="post-title">
+      性能测试常见故障和解决思路
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      性能测试常见故障和解决思路
+一. 性能问题分析流程
+1、查看服务器的CPU、内存，负载等情况，包括应用服务器和数据库服务器
+2、查看数据库健康状态，数据库死锁，连接池不释放
+3、查看项目日志（查看无报错现象）
+4、查看ivm的gc等情况
+二. 内存溢出
+（一）堆内存溢出
+现象：
+(1）压测执行一段时间后，系统处理能力下降。这时用JIConsole、VisuaVM等工具连上服务器查看GC情况，......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-04-25
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#问题排查" title="问题排查">问题排查</a>
     
   </div>
   
@@ -551,6 +873,10 @@ Gitee 仓库地址：ht......
   <!-- Pager -->
   <ul class="pager">
     
+    
+    <li class="next">
+      <a href="/cn/archives/2/">下一页 &rarr;</a>
+    </li>
     
   </ul>
 
@@ -591,15 +917,27 @@ Gitee 仓库地址：ht......
   <div class="tags">
     
     
-    <a href="/tags/#Hexo-Theme-LiveMyLife" title="Hexo-Theme-LiveMyLife" rel="2">Hexo-Theme-LiveMyLife</a>
+    <a href="/tags/#笔记" title="笔记" rel="17">笔记</a>
     
     
     
-    <a href="/tags/#笔记" title="笔记" rel="1">笔记</a>
+    <a href="/tags/#问题排查" title="问题排查" rel="5">问题排查</a>
     
     
     
-    <a href="/tags/#问题排查" title="问题排查" rel="1">问题排查</a>
+    <a href="/tags/#工作流" title="工作流" rel="8">工作流</a>
+    
+    
+    
+    <a href="/tags/#设计思路" title="设计思路" rel="1">设计思路</a>
+    
+    
+    
+    <a href="/tags/#设计" title="设计" rel="1">设计</a>
+    
+    
+    
+    <a href="/tags/#优化" title="优化" rel="1">优化</a>
     
     
   </div>
@@ -662,16 +1000,24 @@ Gitee 仓库地址：ht......
 <div class="widget">
   <ul>
     
-    <a href="%E4%B8%80%E6%AC%A1K8S%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5%E5%A4%B1%E8%B4%A5/">
-      <li>记一次K8S健康检查失败</li>
+    <a href="%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97--%E8%A1%8C%E4%B8%BABehavior%E5%88%86%E6%9E%90/">
+      <li>工作流系列--行为Behavior分析</li>
     </a>
     
-    <a href="Hexo-Theme-LiveMyLife/">
-      <li>Hexo-Theme-LiveMyLife</li>
+    <a href="%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97--agenda%E5%BC%95%E6%93%8E%E8%AE%A1%E5%88%92%E5%88%86%E6%9E%90/">
+      <li>工作流系列--agenda引擎计划分析</li>
     </a>
     
-    <a href="../en/Hexo-Theme-LiveMyLife/">
-      <li>Hexo-Theme-LiveMyLife</li>
+    <a href="%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97--%E5%AE%8C%E6%88%90%E4%BB%BB%E5%8A%A1%E5%91%BD%E4%BB%A4%E5%88%86%E6%9E%90/">
+      <li>工作流系列--完成任务命令分析</li>
+    </a>
+    
+    <a href="%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97--CommandContextInterceptor%E5%88%86%E6%9E%90/">
+      <li>工作流系列--CommandContextInterceptor分析</li>
+    </a>
+    
+    <a href="%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97--ProcessEngineAutoConfiguration%E5%88%86%E6%9E%90/">
+      <li>工作流系列--ProcessEngineAutoConfiguration分析</li>
     </a>
     
   </ul>
@@ -685,12 +1031,6 @@ Gitee 仓库地址：ht......
 <h5><a href="/">链友</a></h5>
 <ul class="list-inline">
   
-  <li><a href="https://v-vincen.life/" target="_blank">V_Vincen</a></li>
-  
-  <li><a href="http://beantech.org" target="_blank">Bean Tech</a></li>
-  
-  <li><a href="http://huangxuan.me" target="_blank">Hux Blog</a></li>
-  
   <li><a href="https://hexo.io/" target="_blank">Hexo</a></li>
   
 </ul>
@@ -702,7 +1042,7 @@ Gitee 仓库地址：ht......
 
 <h5><a href="/archives/">archives</a></h5>
 <div class="widget">
-  <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../archives/2023/08/">August 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2020/04/">April 2020</a><span class="archive-list-count">2</span></li></ul>
+  <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../archives/2024/11/">November 2024</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2024/10/">October 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2024/04/">April 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2024/02/">February 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2024/01/">January 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2023/11/">November 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2023/08/">August 2023</a><span class="archive-list-count">1</span></li></ul>
 </div>
 
 
@@ -714,12 +1054,32 @@ Gitee 仓库地址：ht......
 <div class="widget">
   <ul>
     
-    <a href="/categories/#Hexo-Theme-LiveMyLife">
-      <li>Hexo-Theme-LiveMyLife</li>
+    <a href="/categories/#笔记">
+      <li>笔记</li>
     </a>
     
     <a href="/categories/#开发问题">
       <li>开发问题</li>
+    </a>
+    
+    <a href="/categories/#问题排查">
+      <li>问题排查</li>
+    </a>
+    
+    <a href="/categories/#工作流">
+      <li>工作流</li>
+    </a>
+    
+    <a href="/categories/#设计思路">
+      <li>设计思路</li>
+    </a>
+    
+    <a href="/categories/#设计">
+      <li>设计</li>
+    </a>
+    
+    <a href="/categories/#优化">
+      <li>优化</li>
     </a>
     
   </ul>
@@ -772,7 +1132,7 @@ Gitee 仓库地址：ht......
         <p class="copyright text-muted">
           Copyright &copy;
           张伟真
-          2024
+          2025
           <br>
           Theme by
           <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a>

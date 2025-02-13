@@ -247,9 +247,9 @@
           
           
           <li>
-            <a href="/tags/">
+            <a href="/categories/">
               
-              标签
+              分类
               
               
             </a>
@@ -269,9 +269,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/about/">
               
-              分类
+              关于
               
               
             </a>
@@ -280,9 +280,9 @@
           
           
           <li>
-            <a href="/about/">
+            <a href="/tags/">
               
-              关于
+              标签
               
               
             </a>
@@ -352,19 +352,19 @@
     .body--light {
       /* intro-header */
       --intro-header-background-image-url-home: url('/img/header_img/newhome_bg.jpg');
-      --intro-header-background-image-url-post: url('');
-      --intro-header-background-image-url-page: url('/img/header_img/archive_bg2.jpg');
+      --intro-header-background-image-url-post: url('/img/header_img/lml_bg.jpg');
+      --intro-header-background-image-url-page: url('//img/header_img/lml_bg.jpg');
     }
     .body--dark {
       --intro-header-background-image-url-home: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('/img/header_img/newhome_bg.jpg');
-      --intro-header-background-image-url-post: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('');
-      --intro-header-background-image-url-page: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('/img/header_img/archive_bg2.jpg');
+      --intro-header-background-image-url-post: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('/img/header_img/lml_bg.jpg');
+      --intro-header-background-image-url-page: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('//img/header_img/lml_bg.jpg');
     }
 
     header.intro-header {
        /*post*/
         background-image: var(--intro-header-background-image-url-post);
-        /* background-image: url(''); */
+        /* background-image: url('/img/header_img/lml_bg.jpg'); */
       
     }
 
@@ -410,7 +410,7 @@
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">697</span> In Total
+              Words <span class="post-count">700</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -473,11 +473,11 @@
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
         <h1>一次K8S健康检查失败</h1>
-<h3 id="背景">背景</h3>
+<h3 id="一、背景">一、背景</h3>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">流水线部署成功，POD一直无法<span class="keyword">Running</span>，循环重启。使用kubectl descibe pod 查看pod事件为健康检查失败</span><br></pre></td></tr></table></figure>
-<h3 id="临时解决方案">临时解决方案</h3>
+<h3 id="二、临时解决方案">二、临时解决方案</h3>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">确认服务无问题，临时取消健康检查</span><br></pre></td></tr></table></figure>
-<h3 id="分析过程">分析过程</h3>
+<h3 id="三、分析过程">三、分析过程</h3>
 <figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">查看健康检查配置为: </span></span><br><span class="line"><span class="language-xml">          livenessProbe:</span></span><br><span class="line"><span class="language-xml">            initialDelaySeconds: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.livenessProbe.initialDelaySeconds</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            periodSeconds: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.livenessProbe.periodSeconds</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            timeoutSeconds: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.livenessProbe.timeoutSeconds</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            successThreshold: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.livenessProbe.successThreshold</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            failureThreshold: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.livenessProbe.failureThreshold</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            exec:</span></span><br><span class="line"><span class="language-xml">              command:</span></span><br><span class="line"><span class="language-xml">                - /bin/sh</span></span><br><span class="line"><span class="language-xml">                - -c</span></span><br><span class="line"><span class="language-xml">                - &gt;</span></span><br><span class="line"><span class="language-xml">                  nc -z localhost </span><span class="template-variable">&#123;&#123; <span class="name">.Values.service.port</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">          readinessProbe:</span></span><br><span class="line"><span class="language-xml">            initialDelaySeconds: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.readinessProbe.initialDelaySeconds</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            periodSeconds: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.readinessProbe.periodSeconds</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            timeoutSeconds: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.readinessProbe.timeoutSeconds</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            successThreshold: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.readinessProbe.successThreshold</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            failureThreshold: </span><span class="template-variable">&#123;&#123; <span class="name">.Values.readinessProbe.failureThreshold</span> &#125;&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            exec:</span></span><br><span class="line"><span class="language-xml">              command:</span></span><br><span class="line"><span class="language-xml">                - /bin/sh</span></span><br><span class="line"><span class="language-xml">                - -c</span></span><br><span class="line"><span class="language-xml">                - &gt;</span></span><br><span class="line"><span class="language-xml">                  nc -z localhost </span><span class="template-variable">&#123;&#123; <span class="name">.Values.service.port</span> &#125;&#125;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">查看valus里相关配置内容为</span><span class="punctuation">:</span></span><br><span class="line"><span class="attribute">livenessProbe</span><span class="punctuation">:</span></span><br><span class="line">  <span class="attribute">initialDelaySeconds</span><span class="punctuation">:</span> <span class="string">60</span></span><br><span class="line">  <span class="attribute">periodSeconds</span><span class="punctuation">:</span> <span class="string">30</span></span><br><span class="line">  <span class="attribute">timeoutSeconds</span><span class="punctuation">:</span> <span class="string">3</span></span><br><span class="line">  <span class="attribute">successThreshold</span><span class="punctuation">:</span> <span class="string">1</span></span><br><span class="line">  <span class="attribute">failureThreshold</span><span class="punctuation">:</span> <span class="string">3</span></span><br><span class="line"> </span><br><span class="line"><span class="attribute">readinessProbe</span><span class="punctuation">:</span></span><br><span class="line">  <span class="attribute">initialDelaySeconds</span><span class="punctuation">:</span> <span class="string">30</span></span><br><span class="line">  <span class="attribute">periodSeconds</span><span class="punctuation">:</span> <span class="string">15</span></span><br><span class="line">  <span class="attribute">timeoutSeconds</span><span class="punctuation">:</span> <span class="string">3</span></span><br><span class="line">  <span class="attribute">successThreshold</span><span class="punctuation">:</span> <span class="string">1</span></span><br><span class="line">  <span class="attribute">failureThreshold</span><span class="punctuation">:</span> <span class="string">3</span></span><br><span class="line"><span class="attribute">service</span><span class="punctuation">:</span></span><br><span class="line">  <span class="attribute">enabled</span><span class="punctuation">:</span> <span class="string">true</span></span><br><span class="line">  <span class="attribute">port</span><span class="punctuation">:</span> <span class="string">80</span></span><br><span class="line">  <span class="attribute">type</span><span class="punctuation">:</span> <span class="string">ClusterIP</span></span><br><span class="line">  <span class="attribute">name</span><span class="punctuation">:</span> <span class="string">frontend</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">健康检查的命令为: nc -z localhost 80</span></span><br><span class="line">从容器中查看pod监听的端口为3000，如下图</span><br></pre></td></tr></table></figure>
@@ -490,10 +490,10 @@
         <!-- Pager -->
         <ul class="pager">
           
-          
-          <li class="next">
-            <a href="/cn/Hexo-Theme-LiveMyLife/" data-toggle="tooltip" data-placement="top" title="Hexo-Theme-LiveMyLife">Next Post &rarr;</a>
+          <li class="previous">
+            <a href="/cn/一次线上环境非常规OOM问题的分析/" data-toggle="tooltip" data-placement="top" title="一次线上环境非常规OOM问题的分析">&larr; Previous Post</a>
           </li>
+          
           
         </ul>
 
@@ -624,6 +624,17 @@
       <!-- Catalog: Tabe of Content -->
       <!-- Table of Contents -->
 
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一次K8S健康检查失败</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">一、背景</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">二、临时解决方案</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="toc-nav-number">1.0.3.</span> <span class="toc-nav-text">三、分析过程</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
 
 
       <!-- Sidebar Container -->
@@ -655,18 +666,6 @@
         <h5>链友</h5>
         <ul class="list-inline">
 
-          
-          <li>
-            <a href="https://v-vincen.life/" target="_blank">V_Vincen</a>
-          </li>
-          
-          <li>
-            <a href="http://beantech.org" target="_blank">Bean Tech</a>
-          </li>
-          
-          <li>
-            <a href="http://huangxuan.me" target="_blank">Hux Blog</a>
-          </li>
           
           <li>
             <a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -764,7 +763,7 @@
         <p class="copyright text-muted">
           Copyright &copy;
           张伟真
-          2024
+          2025
           <br>
           Theme by
           <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a>
