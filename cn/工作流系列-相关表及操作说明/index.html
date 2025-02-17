@@ -247,9 +247,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/archive/">
               
-              分类
+              归档
               
               
             </a>
@@ -258,9 +258,9 @@
           
           
           <li>
-            <a href="/archive/">
+            <a href="/categories/">
               
-              归档
+              分类
               
               
             </a>
@@ -472,16 +472,14 @@
       <!-- Post Container -->
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-        <h1>工作流系列 – activity7 相关表及操作说明</h1>
-<p>Activiti Mysql数据库支持：</p>
-<p>Activiti的后台是有数据库的支持,7的版本总共25张表，所有的表都以ACT_开头。 第二部分是表示表的用途的两个字母标识。 用途也和服务的API对应。</p>
-<p>ACT_RE_*: ‘RE’表示repository。 这个前缀的表包含了流程定义和流程静态资源 （图片，规则，等等）。</p>
-<p>ACT_RU_*: ‘RU’表示runtime。 这些运行时的表，包含流程实例，任务，变量，异步任务，身份信息，比如用户，组 等运行中的数据。 Activiti只在流程实例执行过程中保存这些数据， 在流程结束时就会删除这些记录。 这样运行时表可以一直很小速度很快。</p>
-<p>ACT_HI_*: ‘HI’表示history。 这些表包含历史数据，比如历史流程实例， 变量，任务等等。</p>
-<p>ACT_GE_*: 通用数据， 用于不同场景下，如存放资源文件。</p>
+        <h1 id="工作流系列-—-activity7-相关表及操作说明"><a href="#工作流系列-—-activity7-相关表及操作说明" class="headerlink" title="工作流系列 — activity7 相关表及操作说明"></a>工作流系列 — activity7 相关表及操作说明</h1><p>Activiti Mysql数据库支持： </p>
+<p>Activiti的后台是有数据库的支持,7的版本总共25张表，所有的表都以ACT_开头。 第二部分是表示表的用途的两个字母标识。 用途也和服务的API对应。 </p>
+<p>ACT<em>RE</em>*: ‘RE’表示repository。 这个前缀的表包含了流程定义和流程静态资源 （图片，规则，等等）。 </p>
+<p>ACT<em>RU</em>*: ‘RU’表示runtime。 这些运行时的表，包含流程实例，任务，变量，异步任务，身份信息，比如用户，组 等运行中的数据。 Activiti只在流程实例执行过程中保存这些数据， 在流程结束时就会删除这些记录。 这样运行时表可以一直很小速度很快。 </p>
+<p>ACT<em>HI</em>*: ‘HI’表示history。 这些表包含历史数据，比如历史流程实例， 变量，任务等等。 </p>
+<p>ACT<em>GE</em>*: 通用数据， 用于不同场景下，如存放资源文件。</p>
 <p>ACT_EVT_LOG 为事件日志表</p>
-<p>activity对表名的命名规则还是很清晰易懂的,这里不做过多的赘述,附上表<br>
-<img src="./%E6%B5%81%E7%A8%8B%E6%95%B0%E6%8D%AE%E8%A1%A8.png" alt="图片"></p>
+<p>activity对表名的命名规则还是很清晰易懂的,这里不做过多的赘述,附上表<br><img src="./流程数据表.png" alt="图片"></p>
 
 
         <hr>
@@ -631,7 +629,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">工作流系列 – activity7 相关表及操作说明</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97-%E2%80%94-activity7-%E7%9B%B8%E5%85%B3%E8%A1%A8%E5%8F%8A%E6%93%8D%E4%BD%9C%E8%AF%B4%E6%98%8E"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">工作流系列 — activity7 相关表及操作说明</span></a></li></ol>
         
         </div>
       </aside>

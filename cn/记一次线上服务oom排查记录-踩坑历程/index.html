@@ -247,9 +247,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/archive/">
               
-              分类
+              归档
               
               
             </a>
@@ -258,9 +258,9 @@
           
           
           <li>
-            <a href="/archive/">
+            <a href="/categories/">
               
-              归档
+              分类
               
               
             </a>
@@ -410,7 +410,7 @@
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">406</span> In Total
+              Words <span class="post-count">405</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -472,20 +472,12 @@
       <!-- Post Container -->
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-        <h1>记一次线上服务oom排查记录-踩坑历程</h1>
-<p>现象背景：<br>
-发版后突现服务起来后内存OOM，或者启动后几分钟后OOM，只打了 java.lang.OutOfMemoryError: Java heap space 内存爆炸了，线上大量请求异常。 oom之前没出现其他异常日志；<br>
-运行后发现异常</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org<span class="selector-class">.apache</span><span class="selector-class">.catalina</span><span class="selector-class">.connector</span><span class="selector-class">.ClientAbortException</span>: java<span class="selector-class">.io</span><span class="selector-class">.IOException</span>:Broken pipe </span><br></pre></td></tr></table></figure>
+        <h1 id="记一次线上服务oom排查记录-踩坑历程"><a href="#记一次线上服务oom排查记录-踩坑历程" class="headerlink" title="记一次线上服务oom排查记录-踩坑历程"></a>记一次线上服务oom排查记录-踩坑历程</h1><p>现象背景：<br>发版后突现服务起来后内存OOM，或者启动后几分钟后OOM，只打了 java.lang.OutOfMemoryError: Java heap space 内存爆炸了，线上大量请求异常。 oom之前没出现其他异常日志；<br>运行后发现异常<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org<span class="selector-class">.apache</span><span class="selector-class">.catalina</span><span class="selector-class">.connector</span><span class="selector-class">.ClientAbortException</span>: java<span class="selector-class">.io</span><span class="selector-class">.IOException</span>:Broken pipe </span><br></pre></td></tr></table></figure></p>
 <p>踩坑路程：</p>
 <ol>
-<li>内存直接扩大一倍，发现服务还是起来后瞬间就呗打满OOM，服务暂时不可用，没办法只能先分析原因，线上先用<br>
-分析思路，兵分2路走，第一步生产已经配置异常生产dump文件，文件有点大，慢慢下载</li>
+<li>内存直接扩大一倍，发现服务还是起来后瞬间就呗打满OOM，服务暂时不可用，没办法只能先分析原因，线上先用<br>分析思路，兵分2路走，第一步生产已经配置异常生产dump文件，文件有点大，慢慢下载</li>
 </ol>
-<p>第二步，用arthas+jprofiler导出对应的时间内的jfr， 加上参数重启pod，讲异常后生产的jfr下载分析，-XX:+FlightRecorder -XX:StartFlightRecording=duration=600s,filename=flight.jfr<br>
-在idea打开可以看到生成的热点火焰图，分析<br>
-可以看到对应的cpu使用情况，具体是哪个链路哪个类，看是否有CPU异常，可以看方法的调用量及占比<br>
-中间看出有几个消息线程池COPU占用偏高，但是不像引起OOM的原因，等dump分析结合一起看</p>
+<p>第二步，用arthas+jprofiler导出对应的时间内的jfr， 加上参数重启pod，讲异常后生产的jfr下载分析，-XX:+FlightRecorder -XX:StartFlightRecording=duration=600s,filename=flight.jfr<br>在idea打开可以看到生成的热点火焰图，分析<br>可以看到对应的cpu使用情况，具体是哪个链路哪个类，看是否有CPU异常，可以看方法的调用量及占比<br>中间看出有几个消息线程池COPU占用偏高，但是不像引起OOM的原因，等dump分析结合一起看</p>
 <p>其中一个现象出现大量超大请求头，参考了以下链接，排查了配置，发现配置了请求头为200M ，系统启动事有消息队列疯狂请求任务，走http请求，导致应用启动没多久就挂了</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7278247059517800467">https://juejin.cn/post/7278247059517800467</a></p>
 <p>调整好请求头参数后oom时间降低下来了</p>
@@ -638,7 +630,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">记一次线上服务oom排查记录-踩坑历程</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8A%E6%9C%8D%E5%8A%A1oom%E6%8E%92%E6%9F%A5%E8%AE%B0%E5%BD%95-%E8%B8%A9%E5%9D%91%E5%8E%86%E7%A8%8B"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">记一次线上服务oom排查记录-踩坑历程</span></a></li></ol>
         
         </div>
       </aside>

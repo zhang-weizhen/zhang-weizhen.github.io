@@ -247,9 +247,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/archive/">
               
-              分类
+              归档
               
               
             </a>
@@ -258,9 +258,9 @@
           
           
           <li>
-            <a href="/archive/">
+            <a href="/categories/">
               
-              归档
+              分类
               
               
             </a>
@@ -410,7 +410,7 @@
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">819</span> In Total
+              Words <span class="post-count">818</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -472,55 +472,24 @@
       <!-- Post Container -->
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-        <h1>微服务下解决子服务本地开发服务调用问题</h1>
-<hr>
-<h2 id="一-问题及需求">一. 问题及需求</h2>
-<p>问题:<br>
-微服务场景下,随着子服务越来越多,日常开发,开发人员需要本地启动多个必要的一整套服务,来支撑业务子服务的开发调试<br>
-以及与前端的联调. 这对开发人员电脑的配置要求高,并且服务各种原因本地的各种重启很耗费时间,非常不便利.<br>
-需求:<br>
-本地只需要启动自己的业务模块的子服务,其他自己不关心的服务可以使用公共的服务,若涉及多个子服务的本地开发,希望调<br>
-用的时候能精确调用到本地的服务而不是随机服务.</p>
-<h2 id="二-设计思路">二. 设计思路</h2>
-<p>既然需要找到对应的服务,那就需要请求要带上标识,而网关则需要针对标识解析转发到对应的服务上如下图所示<br>
-<img src="./%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF1.jpg" alt="图片"></p>
+        <h1 id="微服务下解决子服务本地开发服务调用问题"><a href="#微服务下解决子服务本地开发服务调用问题" class="headerlink" title="微服务下解决子服务本地开发服务调用问题"></a>微服务下解决子服务本地开发服务调用问题</h1><hr>
+<h2 id="一-问题及需求"><a href="#一-问题及需求" class="headerlink" title="一. 问题及需求"></a>一. 问题及需求</h2><p>问题:<br>  微服务场景下,随着子服务越来越多,日常开发,开发人员需要本地启动多个必要的一整套服务,来支撑业务子服务的开发调试<br>以及与前端的联调. 这对开发人员电脑的配置要求高,并且服务各种原因本地的各种重启很耗费时间,非常不便利.<br>需求:<br>  本地只需要启动自己的业务模块的子服务,其他自己不关心的服务可以使用公共的服务,若涉及多个子服务的本地开发,希望调<br>用的时候能精确调用到本地的服务而不是随机服务.</p>
+<h2 id="二-设计思路"><a href="#二-设计思路" class="headerlink" title="二. 设计思路"></a>二. 设计思路</h2><p>既然需要找到对应的服务,那就需要请求要带上标识,而网关则需要针对标识解析转发到对应的服务上如下图所示<br><img src="./设计思路1.jpg" alt="图片"></p>
 <ol>
-<li>
-<p>前端带上标识这个好解决, 不管什么请求都有请求头,那标识就丢请求头就好了,系统有登陆态,对应的标识可以跟用户绑定,<br>
-这样可以给用户打标签,然后前端在用户信息里面取标签,然后默认带请求头上</p>
+<li><p>前端带上标识这个好解决, 不管什么请求都有请求头,那标识就丢请求头就好了,系统有登陆态,对应的标识可以跟用户绑定,<br>这样可以给用户打标签,然后前端在用户信息里面取标签,然后默认带请求头上</p>
 </li>
-<li>
-<p>那服务怎打上标签呢? 网关又如何识别呢?<br>
-目前注册中心使用的是nacos,微服务体系中有什么服务都是在注册中心拉取信息的,如下图所示<br>
-<img src="./%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF2.jpg" alt="图片"><br>
-在官网查询对应文档中 附上地址: <a target="_blank" rel="noopener" href="https://nacos.io/docs/latest/manual/user/open-api/#31-%E6%B3%A8%E5%86%8C%E5%AE%9E%E4%BE%8B">NACOS官网</a><br>
-看到服务注册的时候有个可以自定义的元数据metadata,这个就是我们想要的,可以给服务打上标签,效果如下<br>
-<img src="./%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF3.jpg" alt="图片"><br>
-<img src="./%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF4.jpg" alt="图片"></p>
+<li><p>那服务怎打上标签呢? 网关又如何识别呢?<br>目前注册中心使用的是nacos,微服务体系中有什么服务都是在注册中心拉取信息的,如下图所示<br><img src="./设计思路2.jpg" alt="图片"><br>在官网查询对应文档中 附上地址: <a target="_blank" rel="noopener" href="https://nacos.io/docs/latest/manual/user/open-api/#31-%E6%B3%A8%E5%86%8C%E5%AE%9E%E4%BE%8B">NACOS官网</a><br>看到服务注册的时候有个可以自定义的元数据metadata,这个就是我们想要的,可以给服务打上标签,效果如下<br><img src="./设计思路3.jpg" alt="图片"><br><img src="./设计思路4.jpg" alt="图片"></p>
 </li>
-<li>
-<p>剩下就是要处理网关上的过滤器了<br>
-网关需要根据用户的登陆绑定的标签,扫描转发的目标服务实例的元数据是否包含对应的标签,如果是则转发过去对应的服务,否则将<br>
-转发到没有打标签的服务实例上<br>
-实现全局过滤器GlobalFilter 逻辑写在过滤器里面</p>
-</li>
+<li>剩下就是要处理网关上的过滤器了<br>网关需要根据用户的登陆绑定的标签,扫描转发的目标服务实例的元数据是否包含对应的标签,如果是则转发过去对应的服务,否则将<br>转发到没有打标签的服务实例上<br>实现全局过滤器GlobalFilter 逻辑写在过滤器里面</li>
 </ol>
 <p>这样就初步实现了前端根据标签调用到本地的路了</p>
-<ol start="4">
-<li>
-<p>微服务难免有服务调用,那怎么实现服务间的灰度呢<br>
-既然每个服务都需要,那就抽一个公共sdk包出来,单独为服务间转发的规则加上灰度规则. 既然是服务间调用用的又是阿里巴巴全家桶,<br>
-那用的就是openFeign, 加在哪里合适呢? 了解过openFeign原理的就知道,经过各种转换之后最终还是会转成ip调用,拿到ip说明拿<br>
-到了对应的路由.<br>
-我们从全局路由负载改造是最好的方式,找源码看实现发现可以在RoundRobinLoadBalancer下手,继承RoundRobinLoadBalancer在选择<br>
-路由前加上我们的规则这样就完成了</p>
+<ol>
+<li><p>微服务难免有服务调用,那怎么实现服务间的灰度呢<br>既然每个服务都需要,那就抽一个公共sdk包出来,单独为服务间转发的规则加上灰度规则. 既然是服务间调用用的又是阿里巴巴全家桶,<br>那用的就是openFeign, 加在哪里合适呢? 了解过openFeign原理的就知道,经过各种转换之后最终还是会转成ip调用,拿到ip说明拿<br>到了对应的路由.<br>我们从全局路由负载改造是最好的方式,找源码看实现发现可以在RoundRobinLoadBalancer下手,继承RoundRobinLoadBalancer在选择<br>路由前加上我们的规则这样就完成了</p>
 </li>
-<li>
-<p>需要考虑多线程的时候需要对数据持久化保证线程子线程或者多线程的时候都能读到对应的标签</p>
+<li><p>需要考虑多线程的时候需要对数据持久化保证线程子线程或者多线程的时候都能读到对应的标签</p>
 </li>
 </ol>
-<p>源码有需要后续开源<br>
-<a target="_blank" rel="noopener" href="https://github.com/zhang-weizhen/zwz-teamwork-demo">demo源码</a></p>
+<p>源码有需要后续开源<br><a target="_blank" rel="noopener" href="https://github.com/zhang-weizhen/zwz-teamwork-demo">demo源码</a></p>
 
 
         <hr>
@@ -670,7 +639,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">微服务下解决子服务本地开发服务调用问题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-%E9%97%AE%E9%A2%98%E5%8F%8A%E9%9C%80%E6%B1%82"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一. 问题及需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二. 设计思路</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B8%8B%E8%A7%A3%E5%86%B3%E5%AD%90%E6%9C%8D%E5%8A%A1%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8%E9%97%AE%E9%A2%98"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">微服务下解决子服务本地开发服务调用问题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-%E9%97%AE%E9%A2%98%E5%8F%8A%E9%9C%80%E6%B1%82"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一. 问题及需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二. 设计思路</span></a></li></ol></li></ol>
         
         </div>
       </aside>
