@@ -247,17 +247,6 @@
           
           
           <li>
-            <a href="/about/">
-              
-              关于
-              
-              
-            </a>
-          </li>
-          
-          
-          
-          <li>
             <a href="/archive/">
               
               归档
@@ -269,9 +258,9 @@
           
           
           <li>
-            <a href="/tags/">
+            <a href="/about/">
               
-              标签
+              关于
               
               
             </a>
@@ -283,6 +272,17 @@
             <a href="/categories/">
               
               分类
+              
+              
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/tags/">
+              
+              标签
               
               
             </a>
@@ -410,7 +410,7 @@
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">297</span> In Total
+              Words <span class="post-count">298</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -472,11 +472,21 @@
       <!-- Post Container -->
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-        <h1 id="文件上传设计方案"><a href="#文件上传设计方案" class="headerlink" title="文件上传设计方案"></a>文件上传设计方案</h1><p>诉求: 外网下载,不能暴露内外文件存储地址和桶<br><img src="./wenjian.png" alt="图片"><br>现状<br><img src="./上传文件现状.png" alt="图片"><br>设计方案一<br><img src="./新上传方案1.png" alt="图片"><br>方案说明：</p>
+        <h1>文件上传设计方案</h1>
+<p>诉求: 外网下载,不能暴露内外文件存储地址和桶<br>
+<img src="./wenjian.png" alt="图片"><br>
+现状<br>
+<img src="./%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E7%8E%B0%E7%8A%B6.png" alt="图片"><br>
+设计方案一<br>
+<img src="./%E6%96%B0%E4%B8%8A%E4%BC%A0%E6%96%B9%E6%A1%881.png" alt="图片"><br>
+方案说明：</p>
 <p>1、除了上传接口变化（大文件前端需要考虑分片上传，分配大小配置或通过接口提供），其他下载、预览均保持现状，改动量较小，影响最小</p>
-<p>2、上传文件接口需要按照规则上传到指定的目录中，需要梳理清楚存储规则，同时平台接口也需要支持把文件写到指定的目录中<br>3、脱离XDM操作文件，但关系不能丢，如果丢失回影响现有文件查询、关联逻辑，改动更大；因此需要模仿DEM上传文件后创建（FileModel）并返回信息，方便保存业务接口数据创建Link关系<br>4、上面步骤保存就了数据关系，考虑了数据关系的兼容，因此下载、预览都是走的原来接口不变</p>
+<p>2、上传文件接口需要按照规则上传到指定的目录中，需要梳理清楚存储规则，同时平台接口也需要支持把文件写到指定的目录中<br>
+3、脱离XDM操作文件，但关系不能丢，如果丢失回影响现有文件查询、关联逻辑，改动更大；因此需要模仿DEM上传文件后创建（FileModel）并返回信息，方便保存业务接口数据创建Link关系<br>
+4、上面步骤保存就了数据关系，考虑了数据关系的兼容，因此下载、预览都是走的原来接口不变</p>
 <p>5、参照第三点文件存储的数据，文件移动（检查文件是否存在、移动文件、文件移动的时机）</p>
-<p>设计方案二<br><img src="./新方案上传2.png" alt="图片"></p>
+<p>设计方案二<br>
+<img src="./%E6%96%B0%E6%96%B9%E6%A1%88%E4%B8%8A%E4%BC%A02.png" alt="图片"></p>
 
 
         <hr>
@@ -626,7 +636,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">文件上传设计方案</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">文件上传设计方案</span></a></li></ol>
         
         </div>
       </aside>

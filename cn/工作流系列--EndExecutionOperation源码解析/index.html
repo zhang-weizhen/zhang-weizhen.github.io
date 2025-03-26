@@ -139,10 +139,10 @@
   <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
   <!-- ga & ba script hoook -->
-  <link rel="canonical" href="http://yoursite-url/cn/微服务下解决子服务本开发服务调用问题/">
+  <link rel="canonical" href="http://yoursite-url/cn/工作流系列--EndExecutionOperation源码解析/">
   <title>
     
-      微服务下解决子服务本地开发服务调用问题 - 兔子博客
+      工作流系列--EndExecutionOperation源码解析 - 兔子博客
     
   </title>
 <meta name="generator" content="Hexo 5.4.2"></head>
@@ -391,14 +391,14 @@
               
               <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
               
-              <a class="tag" href="/tags/#设计思路" title="设计思路">设计思路</a>
+              <a class="tag" href="/tags/#工作流" title="工作流">工作流</a>
               
             </div>
-            <h1>微服务下解决子服务本地开发服务调用问题</h1>
+            <h1>工作流系列--EndExecutionOperation源码解析</h1>
             <h2 class="subheading"></h2>
             <span class="meta">
               Posted by 张伟真 on
-              2023-11-25
+              2024-11-10
             </span>
 
 
@@ -406,11 +406,11 @@
             <!-- WordCount start -->
             <div class="blank_box"></div>
             <span class="meta">
-              Estimated Reading Time <span class="post-count">2</span> Minutes
+              Estimated Reading Time <span class="post-count">7</span> Minutes
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">819</span> In Total
+              Words <span class="post-count">1.7k</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -472,68 +472,53 @@
       <!-- Post Container -->
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-        <h1>微服务下解决子服务本地开发服务调用问题</h1>
-<hr>
-<h2 id="一-问题及需求">一. 问题及需求</h2>
-<p>问题:<br>
-微服务场景下,随着子服务越来越多,日常开发,开发人员需要本地启动多个必要的一整套服务,来支撑业务子服务的开发调试<br>
-以及与前端的联调. 这对开发人员电脑的配置要求高,并且服务各种原因本地的各种重启很耗费时间,非常不便利.<br>
-需求:<br>
-本地只需要启动自己的业务模块的子服务,其他自己不关心的服务可以使用公共的服务,若涉及多个子服务的本地开发,希望调<br>
-用的时候能精确调用到本地的服务而不是随机服务.</p>
-<h2 id="二-设计思路">二. 设计思路</h2>
-<p>既然需要找到对应的服务,那就需要请求要带上标识,而网关则需要针对标识解析转发到对应的服务上如下图所示<br>
-<img src="./%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF1.jpg" alt="图片"></p>
+        <h1>工作流系列–EndExecutionOperation源码解析</h1>
+<h2 id="流程结束">流程结束</h2>
+<p>流程终究会结束, 那流程是怎么结束的呢,这里涉及到一个关键的类,就是我们的EndExecutionOperation</p>
+<p>省流直接看文章末尾总结<br>
+<img src="./%E7%BB%93%E6%9D%9F%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90.png" alt="结束流程分析"><br>
+主代码很简洁,就是2个分支,流程实例级别则走handleProcessInstanceExecution,否则走handleRegularExecution</p>
+<h3 id="handleProcessInstanceExecution分析">handleProcessInstanceExecution分析</h3>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">handleProcessInstanceExecution</span><span class="params">(ExecutionEntity processInstanceExecution)</span> </span>&#123;</span><br><span class="line">        ExecutionEntityManager executionEntityManager = commandContext.getExecutionEntityManager();</span><br><span class="line"></span><br><span class="line">        String processInstanceId = processInstanceExecution.getId(); <span class="comment">// No parent execution == process instance id</span></span><br><span class="line">        logger.debug(<span class="string">&quot;No parent execution found. Verifying if process instance &#123;&#125; can be stopped.&quot;</span>, processInstanceId);</span><br><span class="line">		<span class="comment">// 找父实例</span></span><br><span class="line">        ExecutionEntity superExecution = processInstanceExecution.getSuperExecution();</span><br><span class="line">        SubProcessActivityBehavior subProcessActivityBehavior = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// copy variables before destroying the ended sub process instance (call activity)</span></span><br><span class="line">		<span class="comment">// 在销毁结束的子流程实例（调用活动）之前复制变量</span></span><br><span class="line">        <span class="keyword">if</span> (superExecution != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="comment">// 存在父执行</span></span><br><span class="line">            FlowNode superExecutionElement = (FlowNode) superExecution.getCurrentFlowElement();</span><br><span class="line">            subProcessActivityBehavior = (SubProcessActivityBehavior) superExecutionElement.getBehavior();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="comment">//保存内嵌子流程的变量到库和执行实例execution</span></span><br><span class="line">                subProcessActivityBehavior.completing(superExecution, processInstanceExecution);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">                logger.<span class="keyword">error</span>(<span class="string">&quot;Error while completing sub process of execution &#123;&#125;&quot;</span>, processInstanceExecution, e);</span><br><span class="line">                <span class="keyword">throw</span> e;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                logger.<span class="keyword">error</span>(<span class="string">&quot;Error while completing sub process of execution &#123;&#125;&quot;</span>, processInstanceExecution, e);</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ActivitiException(<span class="string">&quot;Error while completing sub process of execution &quot;</span> + processInstanceExecution, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">//获取当前存活的子执行数量</span></span><br><span class="line">        <span class="keyword">int</span> activeExecutions = getNumberOfActiveChildExecutionsForProcessInstance(executionEntityManager, processInstanceId);</span><br><span class="line">        <span class="keyword">if</span> (activeExecutions == <span class="number">0</span>) &#123;</span><br><span class="line">            logger.debug(<span class="string">&quot;No active executions found. Ending process instance &#123;&#125; &quot;</span>, processInstanceId);</span><br><span class="line">			</span><br><span class="line">            <span class="comment">// note the use of execution here vs processinstance execution for getting the flowelement</span></span><br><span class="line">            <span class="comment">//这里使用流程实例执行来获取流程元素（删除实例相关所有数据）</span></span><br><span class="line">			executionEntityManager.deleteProcessInstanceExecutionEntity(processInstanceId,</span><br><span class="line">                                                                        <span class="keyword">execution</span>.getCurrentFlowElement() != <span class="keyword">null</span> ? <span class="keyword">execution</span>.getCurrentFlowElement().getId() : <span class="keyword">null</span>,</span><br><span class="line">                                                                        <span class="keyword">null</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            logger.debug(<span class="string">&quot;Active executions found. Process instance &#123;&#125; will not be ended.&quot;</span>, processInstanceId);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Process process = ProcessDefinitionUtil.getProcess(processInstanceExecution.getProcessDefinitionId());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Execute execution listeners for process end.</span></span><br><span class="line">		<span class="comment">// 执行结束监听器</span></span><br><span class="line">        <span class="keyword">if</span> (CollectionUtil.isNotEmpty(process.getExecutionListeners())) &#123;</span><br><span class="line">            executeExecutionListeners(process, processInstanceExecution, ExecutionListener.EVENTNAME_END);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// and trigger execution afterwards if doing a call activity</span></span><br><span class="line">        <span class="keyword">if</span> (superExecution != <span class="keyword">null</span>) &#123;</span><br><span class="line">            superExecution.setSubProcessInstance(<span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="comment">// 行为操作最终调用leave离开</span></span><br><span class="line">                subProcessActivityBehavior.completed(superExecution);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">                logger.<span class="keyword">error</span>(<span class="string">&quot;Error while completing sub process of execution &#123;&#125;&quot;</span>, rocessInstanceExecution, e);</span><br><span class="line">                <span class="keyword">throw</span> e;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                logger.<span class="keyword">error</span>(<span class="string">&quot;Error while completing sub process of execution &#123;&#125;&quot;</span>, processInstanceExecution, e);</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ActivitiException(<span class="string">&quot;Error while completing sub process of execution &quot;</span> + processInstanceExecution, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>handleProcessInstanceExecution主要做了4件事情</p>
 <ol>
-<li>
-<p>前端带上标识这个好解决, 不管什么请求都有请求头,那标识就丢请求头就好了,系统有登陆态,对应的标识可以跟用户绑定,<br>
-这样可以给用户打标签,然后前端在用户信息里面取标签,然后默认带请求头上</p>
-</li>
-<li>
-<p>那服务怎打上标签呢? 网关又如何识别呢?<br>
-目前注册中心使用的是nacos,微服务体系中有什么服务都是在注册中心拉取信息的,如下图所示<br>
-<img src="./%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF2.jpg" alt="图片"><br>
-在官网查询对应文档中 附上地址: <a target="_blank" rel="noopener" href="https://nacos.io/docs/latest/manual/user/open-api/#31-%E6%B3%A8%E5%86%8C%E5%AE%9E%E4%BE%8B">NACOS官网</a><br>
-看到服务注册的时候有个可以自定义的元数据metadata,这个就是我们想要的,可以给服务打上标签,效果如下<br>
-<img src="./%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF3.jpg" alt="图片"><br>
-<img src="./%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF4.jpg" alt="图片"></p>
-</li>
-<li>
-<p>剩下就是要处理网关上的过滤器了<br>
-网关需要根据用户的登陆绑定的标签,扫描转发的目标服务实例的元数据是否包含对应的标签,如果是则转发过去对应的服务,否则将<br>
-转发到没有打标签的服务实例上<br>
-实现全局过滤器GlobalFilter 逻辑写在过滤器里面</p>
-</li>
+<li>找父实例,存在父执行：在销毁结束的子流程实例（调用活动）之前保存变量。（通过调用父执行当前元素的行为类的completing方法）<br>
+<img src="./%E7%88%B6%E6%89%A7%E8%A1%8Ccompleting.png" alt="父执行completing"></li>
+<li>获取存活的子执行数量,通过 流程实例id,  删除实例相关所有数据</li>
+<li>流程存在执行监听器则执行,执行结束监听器</li>
+<li>存在父执行，父执行实例的子流程实例设置为null，并通过调用父执行元素活动行为类的completed用于离开<br>
+<img src="./completed.png" alt="completed"><br>
+最终是调用了AbstractBpmnActivityBehavior的leave方法:<br>
+<img src="./leave.png" alt="leave"></li>
 </ol>
-<p>这样就初步实现了前端根据标签调用到本地的路了</p>
-<ol start="4">
-<li>
-<p>微服务难免有服务调用,那怎么实现服务间的灰度呢<br>
-既然每个服务都需要,那就抽一个公共sdk包出来,单独为服务间转发的规则加上灰度规则. 既然是服务间调用用的又是阿里巴巴全家桶,<br>
-那用的就是openFeign, 加在哪里合适呢? 了解过openFeign原理的就知道,经过各种转换之后最终还是会转成ip调用,拿到ip说明拿<br>
-到了对应的路由.<br>
-我们从全局路由负载改造是最好的方式,找源码看实现发现可以在RoundRobinLoadBalancer下手,继承RoundRobinLoadBalancer在选择<br>
-路由前加上我们的规则这样就完成了</p>
-</li>
-<li>
-<p>需要考虑多线程的时候需要对数据持久化保证线程子线程或者多线程的时候都能读到对应的标签</p>
-</li>
+<h3 id="接下来我们看handleRegularExecution">接下来我们看handleRegularExecution</h3>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">handleRegularExecution</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ExecutionEntityManager executionEntityManager = commandContext.getExecutionEntityManager();</span><br><span class="line">    <span class="comment">// There will be a parent execution (or else we would be in the process instance handling method)</span></span><br><span class="line">    ExecutionEntity parentExecution = executionEntityManager.findById(<span class="keyword">execution</span>.getParentId());</span><br><span class="line">    <span class="comment">// If the execution is a scope, all the child executions must be deleted first.</span></span><br><span class="line">	<span class="comment">// 如果执行是父但非流程实例，则必须首先删除所有子执行。</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">execution</span>.isScope()) &#123;</span><br><span class="line">      executionEntityManager.deleteChildExecutions(<span class="keyword">execution</span>, <span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Delete current execution</span></span><br><span class="line">    logger.debug(<span class="string">&quot;Ending execution &#123;&#125;&quot;</span>, <span class="keyword">execution</span>.getId());</span><br><span class="line">    executionEntityManager.deleteExecutionAndRelatedData(<span class="keyword">execution</span>, <span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">    logger.debug(<span class="string">&quot;Parent execution found. Continuing process using execution &#123;&#125;&quot;</span>, parentExecution.getId());</span><br><span class="line">    <span class="comment">// 需要特别注意: 在多实例子流程中结束执行时;</span></span><br><span class="line">    <span class="comment">// When ending an execution in a multi instance subprocess , special care is needed</span></span><br><span class="line">    <span class="keyword">if</span> (isEndEventInMultiInstanceSubprocess(<span class="keyword">execution</span>)) &#123;</span><br><span class="line">		<span class="comment">//处理多实例子流程</span></span><br><span class="line">        handleMultiInstanceSubProcess(executionEntityManager, parentExecution);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    SubProcess subProcess = <span class="keyword">execution</span>.getCurrentFlowElement().getSubProcess();</span><br><span class="line">    <span class="comment">// 如果没有更多活动的子执行，则流程可以继续（例如嵌入式子流程仍有活动元素，我们无法继续）</span></span><br><span class="line">    <span class="comment">// If there are no more active child executions, the process can be continued</span></span><br><span class="line">    <span class="comment">// If not (eg an embedded subprocess still has active elements, we cannot continue)</span></span><br><span class="line">    <span class="keyword">if</span> (getNumberOfActiveChildExecutionsForExecution(executionEntityManager, parentExecution.getId()) == <span class="number">0</span></span><br><span class="line">        || isAllEventScopeExecutions(executionEntityManager, parentExecution)) &#123;</span><br><span class="line">      ExecutionEntity executionToContinue = <span class="keyword">null</span>;</span><br><span class="line">      <span class="keyword">if</span> (subProcess != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// In case of ending a subprocess: go up in the scopes and continue via the parent scope</span></span><br><span class="line">        <span class="comment">// unless its a compensation, then we don&#x27;t need to do anything and can just end it</span></span><br><span class="line">        <span class="comment">// 在结束子流程的情况下：进入范围并通过父范围继续，除非它是补偿，那么我们不需要做任何事情，可以结束它</span></span><br><span class="line">		<span class="keyword">if</span> (subProcess.isForCompensation()) &#123;</span><br><span class="line">          Context.getAgenda().planEndExecutionOperation(parentExecution);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">//处理子流程结束</span></span><br><span class="line">          executionToContinue = handleSubProcessEnd(executionEntityManager, parentExecution, subProcess);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// In the &#x27;regular&#x27; case (not being in a subprocess), we use the parent execution to</span></span><br><span class="line">        <span class="comment">// continue process instance execution</span></span><br><span class="line">        <span class="comment">// 处理规则执行end</span></span><br><span class="line">        executionToContinue = handleRegularExecutionEnd(executionEntityManager, parentExecution);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (executionToContinue != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// only continue with outgoing sequence flows if the execution is</span></span><br><span class="line">        <span class="comment">// not the process instance root execution (otherwise the process instance is finished)</span></span><br><span class="line">		<span class="comment">// 如果执行不是流程实例根执行，则仅继续传出序列流（否则流程实例已完成）</span></span><br><span class="line">        <span class="keyword">if</span> (executionToContinue.isProcessInstanceType()) &#123;</span><br><span class="line">		  <span class="comment">//流程实例类型</span></span><br><span class="line">          handleProcessInstanceExecution(executionToContinue);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          Context.getAgenda().planTakeOutgoingSequenceFlowsOperation(executionToContinue, <span class="keyword">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>handleRegularExecution也是做了4件事情</p>
+<ol>
+<li>如果执行是父但非流程实例，则必须首先删除所有子执行。</li>
+<li>删除执行实例相关数据</li>
+<li>多实例子流程中结束执行时：处理多实例子流程,也是处理结束</li>
+<li>如果没有更多活动的子执行，则流程可以继续（例如嵌入式子流程仍有活动元素，我们无法继续）<br>
+a. 第一中情况在结束子流程的情况下<br>
+是补偿：那么我们不需要做任何事情，可以直接结束它<br>
+非补偿：处理子流程结束handleSubProcessEnd<br>
+b. 非子流程的时候,处理规则执行handleRegularExecutionEnd<br>
+上面执行结束后executionToContinue不为空,如果执行不是流程实例根执行，则仅继续传出序列流（否则流程实例已完成）</li>
 </ol>
-<p>源码有需要后续开源<br>
-<a target="_blank" rel="noopener" href="https://github.com/zhang-weizhen/zwz-teamwork-demo">demo源码</a></p>
-
+<h2 id="总结">总结</h2>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">若是流程实例级别：</span><br><span class="line"><span class="number">1</span>.找父实例</span><br><span class="line">  存在父执行：在销毁结束的子流程实例（callActivity）之前保存变量。（通过调用父执行当前元素的行为类的completing方法）</span><br><span class="line"><span class="number">2</span>.获取存活的子执行数量</span><br><span class="line">  <span class="number">2.1</span>:通过流程实例id删除实例相关所有数据；</span><br><span class="line"><span class="number">3</span>.流程存在执行监听器则执行结束监听器;</span><br><span class="line"><span class="number">4</span>.存在父执行，父执行实例的子流程实例设置为null，并通过调用父执行元素活动行为类的completed用于离开;</span><br><span class="line"> </span><br><span class="line">否：</span><br><span class="line"><span class="number">1</span>.如果执行是父但非流程实例：则必须首先删除所有子执行。</span><br><span class="line"><span class="number">2</span>.删除执行实例相关数据</span><br><span class="line"><span class="number">3</span>.多实例子流程中结束执行时：处理多实例子流程</span><br><span class="line"><span class="number">4</span>.如果没有更多活动的子执行，则流程可以继续（例如嵌入式子流程仍有活动元素，我们无法继续）</span><br><span class="line">  <span class="selector-tag">a</span>.在结束子流程的情况下：</span><br><span class="line">    是补偿：那么我们不需要做任何事情，可以直接结束它<span class="built_in">planEndExecutionOperation</span>(parentExecution)</span><br><span class="line">    非补偿：处理子流程结束：<span class="built_in">handleSubProcessEnd</span>()</span><br><span class="line">  <span class="selector-tag">b</span>.非子流程：</span><br><span class="line">    处理规则执行end：<span class="built_in">handleRegularExecutionEnd</span>()</span><br><span class="line">  c.若ab两点执行后executionToContinue不为空:(如果执行不是流程实例根执行，则仅继续传出序列流（否则流程实例已完成）)</span><br><span class="line">                流程实例类型执行handleProcessInstanceExecution</span><br><span class="line">                否则：执行planTakeOutgoingSequenceFlowsOperation出线</span><br></pre></td></tr></table></figure>
 
         <hr>
         <!-- Pager -->
         <ul class="pager">
           
           <li class="previous">
-            <a href="/cn/记一次线上服务oom排查记录-踩坑历程/" data-toggle="tooltip" data-placement="top" title="记一次线上服务oom排查记录-踩坑历程">&larr; Previous Post</a>
+            <a href="/cn/工作流系列--ContinueProcessOperation流转源码解析/" data-toggle="tooltip" data-placement="top" title="工作流系列--ContinueProcessOperation流转源码解析">&larr; Previous Post</a>
           </li>
           
           
           <li class="next">
-            <a href="/cn/一次线上环境非常规OOM问题的分析/" data-toggle="tooltip" data-placement="top" title="一次线上环境非常规OOM问题的分析">Next Post &rarr;</a>
+            <a href="/cn/工作流系列--planTakeOutgoingSequenceFlowsOperation出线分析/" data-toggle="tooltip" data-placement="top" title="工作流系列--TakeOutgoingSequenceFlowsOperation出线分析">Next Post &rarr;</a>
           </li>
           
         </ul>
@@ -582,7 +567,7 @@
       </a>
     </li>
     <li class="social-share-li">
-      <a target="_blank" class="social-share-icon" href="mailto:?subject=微服务下解决子服务本地开发服务调用问题&body=Hi,I found this website and thought you might like it http://yoursite-url/cn/微服务下解决子服务本开发服务调用问题/">
+      <a target="_blank" class="social-share-icon" href="mailto:?subject=工作流系列--EndExecutionOperation源码解析&body=Hi,I found this website and thought you might like it http://yoursite-url/cn/工作流系列--EndExecutionOperation源码解析/">
         <i class="fa fa-envelope fa-1x" aria-hidden="true"></i>
       </a>
     </li>
@@ -617,7 +602,7 @@
       repo: '',
       owner: '',
       admin: '',
-      id: 'Sat Nov 25 2023 18:03:07 GMT+0800', // Ensure uniqueness and length less than 50
+      id: 'Sun Nov 10 2024 18:11:41 GMT+0800', // Ensure uniqueness and length less than 50
       distractionFreeMode: false, // Facebook-like distraction free mode
       perPage: 10,
       pagerDirection: 'last',
@@ -670,7 +655,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">微服务下解决子服务本地开发服务调用问题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%B8%80-%E9%97%AE%E9%A2%98%E5%8F%8A%E9%9C%80%E6%B1%82"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一. 问题及需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BA%8C-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二. 设计思路</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">工作流系列–EndExecutionOperation源码解析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%B5%81%E7%A8%8B%E7%BB%93%E6%9D%9F"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">流程结束</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#handleProcessInstanceExecution%E5%88%86%E6%9E%90"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">handleProcessInstanceExecution分析</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%88%91%E4%BB%AC%E7%9C%8BhandleRegularExecution"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">接下来我们看handleRegularExecution</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">总结</span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -695,7 +680,7 @@
             
             <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
             
-            <a class="tag" href="/tags/#设计思路" title="设计思路">设计思路</a>
+            <a class="tag" href="/tags/#工作流" title="工作流">工作流</a>
             
           </div>
         </section>
