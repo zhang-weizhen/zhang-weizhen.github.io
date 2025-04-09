@@ -258,9 +258,9 @@
           
           
           <li>
-            <a href="/about/">
+            <a href="/categories/">
               
-              关于
+              分类
               
               
             </a>
@@ -269,9 +269,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/about/">
               
-              分类
+              关于
               
               
             </a>
@@ -466,6 +466,85 @@
       <!-- Main Content -->
 
 
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/工作流系列-学习思路/">
+    <h2 class="post-title">
+      工作流系列-学习思路
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      工作流系列 – activity7学习思路
+在工作的这么几年里,经常看到或者身边有同事在接触一个新的技术和引入一个新的框架或者引擎时,不知道这么去学习和深入
+导致在遇到问题的时候无从下手根本不知道问题出现在哪里.
+借助工作流引擎,记录下学习方法,也给大家一些学习的思路
+学习如何入手
+不管是新的技术还是新的框,以主流的框架springboot为例,引入工作流,引用例jar包,配置下就能用. 想......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-11-01
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#工作流" title="工作流">工作流</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+  
+  <!-- top start (article top hot config) -->
+  
+  <!-- top end -->
+  
+
+  <a href="/cn/工作流系列-相关表及操作说明/">
+    <h2 class="post-title">
+      工作流系列 -- activity7 相关表及操作说明
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      工作流系列 – activity7 相关表及操作说明
+Activiti Mysql数据库支持：
+Activiti的后台是有数据库的支持,7的版本总共25张表，所有的表都以ACT_开头。 第二部分是表示表的用途的两个字母标识。 用途也和服务的API对应。
+ACT_RE_*: ‘RE’表示repository。 这个前缀的表包含了流程定义和流程静态资源 （图片，规则，等等）。
+ACT_RU_*:......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by 张伟真 on
+    2024-10-30
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#笔记" title="笔记">笔记</a>
+    
+    <a href="/tags/#工作流" title="工作流">工作流</a>
+    
+  </div>
+  
+
+</div>
+<hr>
 
 <div class="post-preview">
   
@@ -812,84 +891,6 @@ httpclient和httpget复用
 </div>
 <hr>
 
-<div class="post-preview">
-  
-  <!-- top start (article top hot config) -->
-  
-  <!-- top end -->
-  
-
-  <a href="/cn/一次线上环境非常规OOM问题的分析/">
-    <h2 class="post-title">
-      一次线上环境非常规OOM问题的分析
-    </h2>
-    <h3 class="post-subtitle">
-      
-    </h3>
-    <div class="post-content-preview">
-      一次线上环境非常规OOM问题的分析
-出现OOM的情况是这样的，在业务操作的高峰期，docker容器运行的6个实例，最多的时候可以一周有2-3天都会出现OOM，且一天最多出现3-4次的OOM。
-在对这种OOM的dump文件初步分析之后发现，这不是之前出现过的，类似于用户查询某个列表数据，查询返回的数据量较大，且多个用户在同时查询，这种非常明显的，某个业务对象生成了很多，占用了很大的堆内存，导致......
-    </div>
-  </a>
-  
-  <p class="post-meta" style="margin: 10px 0;">
-    Posted by 张伟真 on
-    2023-11-08
-  </p>
-  <div class="tags">
-    
-    <a href="/tags/#笔记" title="笔记">笔记</a>
-    
-    <a href="/tags/#问题排查" title="问题排查">问题排查</a>
-    
-  </div>
-  
-
-</div>
-<hr>
-
-<div class="post-preview">
-  
-  <!-- top start (article top hot config) -->
-  
-  <!-- top end -->
-  
-
-  <a href="/cn/一次K8S健康检查失败/">
-    <h2 class="post-title">
-      记一次K8S健康检查失败
-    </h2>
-    <h3 class="post-subtitle">
-      
-    </h3>
-    <div class="post-content-preview">
-      一次K8S健康检查失败
-一、背景
-1流水线部署成功，POD一直无法Running，循环重启。使用kubectl descibe pod 查看pod事件为健康检查失败
-二、临时解决方案
-1确认服务无问题，临时取消健康检查
-三、分析过程
-12345678910111213141516171819202122232425查看健康检查配置为:           livenessProbe:    ......
-    </div>
-  </a>
-  
-  <p class="post-meta" style="margin: 10px 0;">
-    Posted by 张伟真 on
-    2023-08-25
-  </p>
-  <div class="tags">
-    
-    <a href="/tags/#笔记" title="笔记">笔记</a>
-    
-    <a href="/tags/#问题排查" title="问题排查">问题排查</a>
-    
-  </div>
-  
-
-</div>
-<hr>
-
 
   <!-- Pager -->
   <ul class="pager">
@@ -898,6 +899,10 @@ httpclient和httpget复用
       <a href="/cn/">&larr; 上一页</a>
     </li>
     
+    
+    <li class="next">
+      <a href="/cn/archives/3/">下一页 &rarr;</a>
+    </li>
     
   </ul>
 
@@ -938,7 +943,7 @@ httpclient和httpget复用
   <div class="tags">
     
     
-    <a href="/tags/#笔记" title="笔记" rel="20">笔记</a>
+    <a href="/tags/#笔记" title="笔记" rel="22">笔记</a>
     
     
     
@@ -1021,6 +1026,14 @@ httpclient和httpget复用
 <div class="widget">
   <ul>
     
+    <a href="../../java%E4%B8%AD%E7%9A%84volatile%E5%85%B3%E9%94%AE%E5%AD%97/">
+      <li>java中的volatile关键字</li>
+    </a>
+    
+    <a href="../../java%E4%B8%AD%E7%9A%84%E9%94%81--ReentrantLock%20%E5%8F%AF%E9%87%8D%E5%A6%82%E9%94%81/">
+      <li>java中的锁--ReentrantLock可重入锁</li>
+    </a>
+    
     <a href="../../%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97--ContinueProcessOperation%E6%B5%81%E8%BD%AC%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
       <li>工作流系列--ContinueProcessOperation流转源码解析</li>
     </a>
@@ -1031,14 +1044,6 @@ httpclient和httpget复用
     
     <a href="../../%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97--planTakeOutgoingSequenceFlowsOperation%E5%87%BA%E7%BA%BF%E5%88%86%E6%9E%90/">
       <li>工作流系列--TakeOutgoingSequenceFlowsOperation出线分析</li>
-    </a>
-    
-    <a href="../../%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97--%E8%A1%8C%E4%B8%BABehavior%E5%88%86%E6%9E%90/">
-      <li>工作流系列--行为Behavior分析</li>
-    </a>
-    
-    <a href="../../%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%B3%BB%E5%88%97--agenda%E5%BC%95%E6%93%8E%E8%AE%A1%E5%88%92%E5%88%86%E6%9E%90/">
-      <li>工作流系列--agenda引擎计划分析</li>
     </a>
     
   </ul>
@@ -1063,7 +1068,7 @@ httpclient和httpget复用
 
 <h5><a href="/archives/">archives</a></h5>
 <div class="widget">
-  <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/11/">November 2024</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/10/">October 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/04/">April 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/02/">February 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/01/">January 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2023/11/">November 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2023/08/">August 2023</a><span class="archive-list-count">1</span></li></ul>
+  <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/11/">November 2024</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/10/">October 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/04/">April 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/02/">February 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2024/01/">January 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2023/11/">November 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../../archives/2023/08/">August 2023</a><span class="archive-list-count">1</span></li></ul>
 </div>
 
 
@@ -1079,16 +1084,20 @@ httpclient和httpget复用
       <li>笔记</li>
     </a>
     
-    <a href="/categories/#开发问题">
-      <li>开发问题</li>
-    </a>
-    
     <a href="/categories/#问题排查">
       <li>问题排查</li>
     </a>
     
+    <a href="/categories/#开发问题">
+      <li>开发问题</li>
+    </a>
+    
     <a href="/categories/#工作流">
       <li>工作流</li>
+    </a>
+    
+    <a href="/categories/#java中的锁">
+      <li>java中的锁</li>
     </a>
     
     <a href="/categories/#设计思路">

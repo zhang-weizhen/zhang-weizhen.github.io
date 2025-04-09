@@ -258,9 +258,9 @@
           
           
           <li>
-            <a href="/about/">
+            <a href="/categories/">
               
-              关于
+              分类
               
               
             </a>
@@ -269,9 +269,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/about/">
               
-              分类
+              关于
               
               
             </a>
@@ -459,13 +459,15 @@
       <!-- 标签云 -->
       <div id='tag_cloud' class="tags">
         
-        <a href="#笔记" title="笔记" rel="1">笔记</a>
-        
-        <a href="#开发问题" title="开发问题" rel="1">开发问题</a>
+        <a href="#笔记" title="笔记" rel="3">笔记</a>
         
         <a href="#问题排查" title="问题排查" rel="4">问题排查</a>
         
+        <a href="#开发问题" title="开发问题" rel="1">开发问题</a>
+        
         <a href="#工作流" title="工作流" rel="11">工作流</a>
+        
+        <a href="#java中的锁" title="java中的锁" rel="1">java中的锁</a>
         
         <a href="#设计思路" title="设计思路" rel="1">设计思路</a>
         
@@ -487,6 +489,24 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
         <div class="post-preview">
+          <a href="/cn/java中的volatile关键字/">
+            <h2 class="post-title">
+              java中的volatile关键字
+              
+              -- cn
+              
+            </h2>
+            
+          </a>
+          <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+        </div>
+        <hr>
+        
+        <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+        <div class="post-preview">
           <a href="/cn/Reactor 模式的理解/">
             <h2 class="post-title">
               Reactor 模式的理解
@@ -500,21 +520,14 @@
         </div>
         <hr>
         
-      </div>
-      
-      <div class="one-tag-list">
-        <span class="fa fa-tag listing-seperator" id="开发问题">
-          <span class="tag-text">开发问题</span>
-        </span>
-        
         <!-- <li class="listing-item">
                   <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
         <div class="post-preview">
-          <a href="/cn/一次K8S健康检查失败/">
+          <a href="/cn/java中的锁--ReentrantLock 可重如锁/">
             <h2 class="post-title">
-              记一次K8S健康检查失败
+              java中的锁--ReentrantLock可重入锁
               
               -- cn
               
@@ -573,9 +586,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
         <div class="post-preview">
-          <a href="/cn/线程池使用不规范导致的生产问题/">
+          <a href="/cn/记一次线上服务oom排查记录-踩坑历程/">
             <h2 class="post-title">
-              线程池使用不规范导致的生产问题
+              记一次线上服务oom排查记录-踩坑历程
               
               -- cn
               
@@ -591,9 +604,34 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
         <div class="post-preview">
-          <a href="/cn/记一次线上服务oom排查记录-踩坑历程/">
+          <a href="/cn/线程池使用不规范导致的生产问题/">
             <h2 class="post-title">
-              记一次线上服务oom排查记录-踩坑历程
+              线程池使用不规范导致的生产问题
+              
+              -- cn
+              
+            </h2>
+            
+          </a>
+          <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+        </div>
+        <hr>
+        
+      </div>
+      
+      <div class="one-tag-list">
+        <span class="fa fa-tag listing-seperator" id="开发问题">
+          <span class="tag-text">开发问题</span>
+        </span>
+        
+        <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+        <div class="post-preview">
+          <a href="/cn/一次K8S健康检查失败/">
+            <h2 class="post-title">
+              记一次K8S健康检查失败
               
               -- cn
               
@@ -799,6 +837,31 @@
           <a href="/cn/工作流驳回场景设计实现方案/">
             <h2 class="post-title">
               工作流驳回场景设计实现方案
+              
+              -- cn
+              
+            </h2>
+            
+          </a>
+          <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+        </div>
+        <hr>
+        
+      </div>
+      
+      <div class="one-tag-list">
+        <span class="fa fa-tag listing-seperator" id="java中的锁">
+          <span class="tag-text">java中的锁</span>
+        </span>
+        
+        <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+        <div class="post-preview">
+          <a href="/cn/java中的锁--ReentrantLock 可重如锁/">
+            <h2 class="post-title">
+              java中的锁--ReentrantLock可重入锁
               
               -- cn
               
